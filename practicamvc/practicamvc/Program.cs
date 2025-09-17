@@ -1,4 +1,9 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using practicamvc.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<practicamvcContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("practicamvcContext") ?? throw new InvalidOperationException("Connection string 'practicamvcContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
