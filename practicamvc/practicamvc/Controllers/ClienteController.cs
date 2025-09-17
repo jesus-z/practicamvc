@@ -10,22 +10,22 @@ using practicamvc.Models;
 
 namespace practicamvc.Controllers
 {
-    public class ProductoModelsController : Controller
+    public class ClienteController : Controller
     {
         private readonly practicamvcContext _context;
 
-        public ProductoModelsController(practicamvcContext context)
+        public ClienteController(practicamvcContext context)
         {
             _context = context;
         }
 
-        // GET: ProductoModels
+        // GET: ClienteModels
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ProductoModel.ToListAsync());
+            return View(await _context.ClienteModel.ToListAsync());
         }
 
-        // GET: ProductoModels/Details/5
+        // GET: ClienteModels/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace practicamvc.Controllers
                 return NotFound();
             }
 
-            var productoModel = await _context.ProductoModel
+            var clienteModel = await _context.ClienteModel
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (productoModel == null)
+            if (clienteModel == null)
             {
                 return NotFound();
             }
 
-            return View(productoModel);
+            return View(clienteModel);
         }
 
-        // GET: ProductoModels/Create
+        // GET: ClienteModels/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: ProductoModels/Create
+        // POST: ClienteModels/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Descripcion,Precio,Stock")] ProductoModel productoModel)
+        public async Task<IActionResult> Create([Bind("Id,NombreCompleto,Telefono,FechaRegistro,Ciudad,Activo")] ClienteModel clienteModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(productoModel);
+                _context.Add(clienteModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(productoModel);
+            return View(clienteModel);
         }
 
-        // GET: ProductoModels/Edit/5
+        // GET: ClienteModels/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace practicamvc.Controllers
                 return NotFound();
             }
 
-            var productoModel = await _context.ProductoModel.FindAsync(id);
-            if (productoModel == null)
+            var clienteModel = await _context.ClienteModel.FindAsync(id);
+            if (clienteModel == null)
             {
                 return NotFound();
             }
-            return View(productoModel);
+            return View(clienteModel);
         }
 
-        // POST: ProductoModels/Edit/5
+        // POST: ClienteModels/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Descripcion,Precio,Stock")] ProductoModel productoModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,NombreCompleto,Telefono,FechaRegistro,Ciudad,Activo")] ClienteModel clienteModel)
         {
-            if (id != productoModel.Id)
+            if (id != clienteModel.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace practicamvc.Controllers
             {
                 try
                 {
-                    _context.Update(productoModel);
+                    _context.Update(clienteModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductoModelExists(productoModel.Id))
+                    if (!ClienteModelExists(clienteModel.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace practicamvc.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(productoModel);
+            return View(clienteModel);
         }
 
-        // GET: ProductoModels/Delete/5
+        // GET: ClienteModels/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,34 +124,34 @@ namespace practicamvc.Controllers
                 return NotFound();
             }
 
-            var productoModel = await _context.ProductoModel
+            var clienteModel = await _context.ClienteModel
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (productoModel == null)
+            if (clienteModel == null)
             {
                 return NotFound();
             }
 
-            return View(productoModel);
+            return View(clienteModel);
         }
 
-        // POST: ProductoModels/Delete/5
+        // POST: ClienteModels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var productoModel = await _context.ProductoModel.FindAsync(id);
-            if (productoModel != null)
+            var clienteModel = await _context.ClienteModel.FindAsync(id);
+            if (clienteModel != null)
             {
-                _context.ProductoModel.Remove(productoModel);
+                _context.ClienteModel.Remove(clienteModel);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProductoModelExists(int id)
+        private bool ClienteModelExists(int id)
         {
-            return _context.ProductoModel.Any(e => e.Id == id);
+            return _context.ClienteModel.Any(e => e.Id == id);
         }
     }
 }

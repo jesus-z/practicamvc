@@ -8,24 +8,25 @@ using Microsoft.EntityFrameworkCore;
 using practicamvc.Data;
 using practicamvc.Models;
 
-namespace practicamvc
+namespace practicamvc.Controllers
 {
-    public class ClienteModelsController : Controller
+    public class PedidoController : Controller
     {
         private readonly practicamvcContext _context;
 
-        public ClienteModelsController(practicamvcContext context)
+        public PedidoController(practicamvcContext context)
         {
             _context = context;
         }
 
-        // GET: ClienteModels
+        // GET: PedidoModels
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ClienteModel.ToListAsync());
+            var practicamvcContext = _context.PedidoModel.Include(p => p.Cliente);
+            return View(await practicamvcContext.ToListAsync());
         }
 
-        // GET: ClienteModels/Details/5
+        // GET: PedidoModels/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +34,42 @@ namespace practicamvc
                 return NotFound();
             }
 
-            var clienteModel = await _context.ClienteModel
+            var pedidoModel = await _context.PedidoModel
+                .Include(p => p.Cliente)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (clienteModel == null)
+            if (pedidoModel == null)
             {
                 return NotFound();
             }
 
-            return View(clienteModel);
+            return View(pedidoModel);
         }
 
-        // GET: ClienteModels/Create
+        // GET: PedidoModels/Create
         public IActionResult Create()
         {
+            ViewData["ClienteId"] = new SelectList(_context.ClienteModel, "Id", "NombreCompleto");
             return View();
         }
 
-        // POST: ClienteModels/Create
+        // POST: PedidoModels/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,NombreCompleto,Telefono,FechaRegistro,Ciudad,Activo")] ClienteModel clienteModel)
+        public async Task<IActionResult> Create([Bind("Id,FechaPedido,ClienteId,Estado,MontoDecimal")] PedidoModel pedidoModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(clienteModel);
+                _context.Add(pedidoModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(clienteModel);
+            ViewData["ClienteId"] = new SelectList(_context.ClienteModel, "Id", "NombreCompleto", pedidoModel.ClienteId);
+            return View(pedidoModel);
         }
 
-        // GET: ClienteModels/Edit/5
+        // GET: PedidoModels/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +77,23 @@ namespace practicamvc
                 return NotFound();
             }
 
-            var clienteModel = await _context.ClienteModel.FindAsync(id);
-            if (clienteModel == null)
+            var pedidoModel = await _context.PedidoModel.FindAsync(id);
+            if (pedidoModel == null)
             {
                 return NotFound();
             }
-            return View(clienteModel);
+            ViewData["ClienteId"] = new SelectList(_context.ClienteModel, "Id", "NombreCompleto", pedidoModel.ClienteId);
+            return View(pedidoModel);
         }
 
-        // POST: ClienteModels/Edit/5
+        // POST: PedidoModels/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,NombreCompleto,Telefono,FechaRegistro,Ciudad,Activo")] ClienteModel clienteModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FechaPedido,ClienteId,Estado,MontoDecimal")] PedidoModel pedidoModel)
         {
-            if (id != clienteModel.Id)
+            if (id != pedidoModel.Id)
             {
                 return NotFound();
             }
@@ -97,12 +102,12 @@ namespace practicamvc
             {
                 try
                 {
-                    _context.Update(clienteModel);
+                    _context.Update(pedidoModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ClienteModelExists(clienteModel.Id))
+                    if (!PedidoModelExists(pedidoModel.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +118,11 @@ namespace practicamvc
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(clienteModel);
+            ViewData["ClienteId"] = new SelectList(_context.ClienteModel, "Id", "NombreCompleto", pedidoModel.ClienteId);
+            return View(pedidoModel);
         }
 
-        // GET: ClienteModels/Delete/5
+        // GET: PedidoModels/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,34 +130,35 @@ namespace practicamvc
                 return NotFound();
             }
 
-            var clienteModel = await _context.ClienteModel
+            var pedidoModel = await _context.PedidoModel
+                .Include(p => p.Cliente)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (clienteModel == null)
+            if (pedidoModel == null)
             {
                 return NotFound();
             }
 
-            return View(clienteModel);
+            return View(pedidoModel);
         }
 
-        // POST: ClienteModels/Delete/5
+        // POST: PedidoModels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var clienteModel = await _context.ClienteModel.FindAsync(id);
-            if (clienteModel != null)
+            var pedidoModel = await _context.PedidoModel.FindAsync(id);
+            if (pedidoModel != null)
             {
-                _context.ClienteModel.Remove(clienteModel);
+                _context.PedidoModel.Remove(pedidoModel);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ClienteModelExists(int id)
+        private bool PedidoModelExists(int id)
         {
-            return _context.ClienteModel.Any(e => e.Id == id);
+            return _context.PedidoModel.Any(e => e.Id == id);
         }
     }
 }

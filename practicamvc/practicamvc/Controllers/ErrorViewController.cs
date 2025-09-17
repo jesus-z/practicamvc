@@ -10,11 +10,11 @@ using practicamvc.Models;
 
 namespace practicamvc.Controllers
 {
-    public class ErrorViewModelsController : Controller
+    public class ErrorViewController : Controller
     {
         private readonly practicamvcContext _context;
 
-        public ErrorViewModelsController(practicamvcContext context)
+        public ErrorViewController(practicamvcContext context)
         {
             _context = context;
         }
