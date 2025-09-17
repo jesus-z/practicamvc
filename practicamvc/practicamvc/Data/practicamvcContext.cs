@@ -15,5 +15,9 @@ namespace practicamvc.Data
         }
 
         public DbSet<practicamvc.Models.ClienteModel> ClienteModel { get; set; } = default!;
+        public DbSet<practicamvc.Models.DetallePedidoModel> DetallePedidoModel { get; set; } = default!;
+        public DbSet<practicamvc.Models.ErrorViewModel> ErrorViewModel { get; set; } = default!;
+        public DbSet<practicamvc.Models.PedidoModel> PedidoModel { get; set; } = default!;
+        public DbSet<practicamvc.Models.ProductoModel> ProductoModel { get; set; } = default!;
     }
 }
