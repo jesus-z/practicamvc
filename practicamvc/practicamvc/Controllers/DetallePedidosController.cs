@@ -50,7 +50,7 @@ namespace practicamvc.Controllers
         public IActionResult Create()
         {
             ViewData["PedidoId"] = new SelectList(_context.Set<Pedidos>(), "Id", "Estado");
-            ViewData["ProductoId"] = new SelectList(_context.Set<Productos>(), "Id", "Nombre");
+            ViewData["ProductoId"] = new SelectList(_context.Set<Order>(), "Id", "Nombre");
             return View();
         }
 
@@ -68,7 +68,7 @@ namespace practicamvc.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["PedidoId"] = new SelectList(_context.Set<Pedidos>(), "Id", "Estado", detallePedidoModel.PedidoId);
-            ViewData["ProductoId"] = new SelectList(_context.Set<Productos>(), "Id", "Nombre", detallePedidoModel.ProductoId);
+            ViewData["ProductoId"] = new SelectList(_context.Set<Order>(), "Id", "Nombre", detallePedidoModel.ProductoId);
             return View(detallePedidoModel);
         }
 
@@ -86,7 +86,7 @@ namespace practicamvc.Controllers
                 return NotFound();
             }
             ViewData["PedidoId"] = new SelectList(_context.Set<Pedidos>(), "Id", "Estado", detallePedidoModel.PedidoId);
-            ViewData["ProductoId"] = new SelectList(_context.Set<Productos>(), "Id", "Nombre", detallePedidoModel.ProductoId);
+            ViewData["ProductoId"] = new SelectList(_context.Set<Order>(), "Id", "Nombre", detallePedidoModel.ProductoId);
             return View(detallePedidoModel);
         }
 
@@ -123,7 +123,7 @@ namespace practicamvc.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["PedidoId"] = new SelectList(_context.Set<Pedidos>(), "Id", "Estado", detallePedidoModel.PedidoId);
-            ViewData["ProductoId"] = new SelectList(_context.Set<Productos>(), "Id", "Nombre", detallePedidoModel.ProductoId);
+            ViewData["ProductoId"] = new SelectList(_context.Set<Order>(), "Id", "Nombre", detallePedidoModel.ProductoId);
             return View(detallePedidoModel);
         }
 

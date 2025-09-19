@@ -54,7 +54,7 @@ namespace practicamvc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Descripcion,Precio,Stock")] Productos productoModel)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Descripcion,Precio,Stock")] Order productoModel)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace practicamvc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Descripcion,Precio,Stock")] Productos productoModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Descripcion,Precio,Stock")] Order productoModel)
         {
             if (id != productoModel.Id)
             {

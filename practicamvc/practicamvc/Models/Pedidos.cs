@@ -31,7 +31,7 @@ namespace practicamvc.Models
         public decimal MontoDecimal { get; set; }
 
         // Propiedades de navegación
-        public Clientes? Cliente { get; set; }
+        public User? Cliente { get; set; }
         public ICollection<DetallePedidos>? DetallePedidos { get; set; }
 
         [Display(Name = "Total Detalles")]

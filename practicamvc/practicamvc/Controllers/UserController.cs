@@ -10,11 +10,11 @@ using practicamvc.Models;
 
 namespace practicamvc.Controllers
 {
-    public class ClientesController : Controller
+    public class UserController : Controller
     {
         private readonly practicamvcContext _context;
 
-        public ClientesController(practicamvcContext context)
+        public UserController(practicamvcContext context)
         {
             _context = context;
         }
@@ -22,7 +22,7 @@ namespace practicamvc.Controllers
         // GET: ClienteModels
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ClientesModel.ToListAsync());
+            return View(await _context.UserModel.ToListAsync());
         }
 
         // GET: ClienteModels/Details/5
@@ -33,7 +33,7 @@ namespace practicamvc.Controllers
                 return NotFound();
             }
 
-            var clienteModel = await _context.ClientesModel
+            var clienteModel = await _context.UserModel
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (clienteModel == null)
             {
@@ -54,7 +54,7 @@ namespace practicamvc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,NombreCompleto,Telefono,FechaRegistro,Ciudad,Activo")] Clientes clienteModel)
+        public async Task<IActionResult> Create([Bind("Id,NombreCompleto,Telefono,FechaRegistro,Ciudad,Activo")] User clienteModel)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +73,7 @@ namespace practicamvc.Controllers
                 return NotFound();
             }
 
-            var clienteModel = await _context.ClientesModel.FindAsync(id);
+            var clienteModel = await _context.UserModel.FindAsync(id);
             if (clienteModel == null)
             {
                 return NotFound();
@@ -86,7 +86,7 @@ namespace practicamvc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,NombreCompleto,Telefono,FechaRegistro,Ciudad,Activo")] Clientes clienteModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,NombreCompleto,Telefono,FechaRegistro,Ciudad,Activo")] User clienteModel)
         {
             if (id != clienteModel.Id)
             {
@@ -124,7 +124,7 @@ namespace practicamvc.Controllers
                 return NotFound();
             }
 
-            var clienteModel = await _context.ClientesModel
+            var clienteModel = await _context.UserModel
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (clienteModel == null)
             {
@@ -139,10 +139,10 @@ namespace practicamvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var clienteModel = await _context.ClientesModel.FindAsync(id);
+            var clienteModel = await _context.UserModel.FindAsync(id);
             if (clienteModel != null)
             {
-                _context.ClientesModel.Remove(clienteModel);
+                _context.UserModel.Remove(clienteModel);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +151,7 @@ namespace practicamvc.Controllers
 
         private bool ClienteModelExists(int id)
         {
-            return _context.ClientesModel.Any(e => e.Id == id);
+            return _context.UserModel.Any(e => e.Id == id);
         }
     }
 }

@@ -5,7 +5,7 @@ using practicamvc.Models;
 
 namespace practicamvc.Models
 {
-    public class Clientes
+    public class User
     {
         public int Id { get; set; }
 

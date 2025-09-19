@@ -10,11 +10,11 @@ using practicamvc.Models;
 
 namespace practicamvc.Controllers
 {
-    public class PedidosController : Controller
+    public class OrderController : Controller
     {
         private readonly practicamvcContext _context;
 
-        public PedidosController(practicamvcContext context)
+        public OrderController(practicamvcContext context)
         {
             _context = context;
         }
@@ -22,7 +22,7 @@ namespace practicamvc.Controllers
         // GET: PedidoModels
         public async Task<IActionResult> Index()
         {
-            var practicamvcContext = _context.PedidoModel.Include(p => p.Cliente);
+            var practicamvcContext = _context.OrderModel.Include(p => p.Cliente);
             return View(await practicamvcContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace practicamvc.Controllers
                 return NotFound();
             }
 
-            var pedidoModel = await _context.PedidoModel
+            var pedidoModel = await _context.OrderModel
                 .Include(p => p.Cliente)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (pedidoModel == null)
@@ -48,7 +48,7 @@ namespace practicamvc.Controllers
         // GET: PedidoModels/Create
         public IActionResult Create()
         {
-            ViewData["ClienteId"] = new SelectList(_context.ClientesModel, "Id", "NombreCompleto");
+            ViewData["ClienteId"] = new SelectList(_context.UserModel, "Id", "NombreCompleto");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace practicamvc.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClienteId"] = new SelectList(_context.ClientesModel, "Id", "NombreCompleto", pedidoModel.ClienteId);
+            ViewData["ClienteId"] = new SelectList(_context.UserModel, "Id", "NombreCompleto", pedidoModel.ClienteId);
             return View(pedidoModel);
         }
 
@@ -77,12 +77,12 @@ namespace practicamvc.Controllers
                 return NotFound();
             }
 
-            var pedidoModel = await _context.PedidoModel.FindAsync(id);
+            var pedidoModel = await _context.OrderModel.FindAsync(id);
             if (pedidoModel == null)
             {
                 return NotFound();
             }
-            ViewData["ClienteId"] = new SelectList(_context.ClientesModel, "Id", "NombreCompleto", pedidoModel.ClienteId);
+            ViewData["ClienteId"] = new SelectList(_context.UserModel, "Id", "NombreCompleto", pedidoModel.ClienteId);
             return View(pedidoModel);
         }
 
@@ -118,7 +118,7 @@ namespace practicamvc.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClienteId"] = new SelectList(_context.ClientesModel, "Id", "NombreCompleto", pedidoModel.ClienteId);
+            ViewData["ClienteId"] = new SelectList(_context.UserModel, "Id", "NombreCompleto", pedidoModel.ClienteId);
             return View(pedidoModel);
         }
 
@@ -130,7 +130,7 @@ namespace practicamvc.Controllers
                 return NotFound();
             }
 
-            var pedidoModel = await _context.PedidoModel
+            var pedidoModel = await _context.OrderModel
                 .Include(p => p.Cliente)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (pedidoModel == null)
@@ -146,10 +146,10 @@ namespace practicamvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var pedidoModel = await _context.PedidoModel.FindAsync(id);
+            var pedidoModel = await _context.OrderModel.FindAsync(id);
             if (pedidoModel != null)
             {
-                _context.PedidoModel.Remove(pedidoModel);
+                _context.OrderModel.Remove(pedidoModel);
             }
 
             await _context.SaveChangesAsync();
@@ -158,7 +158,7 @@ namespace practicamvc.Controllers
 
         private bool PedidoModelExists(int id)
         {
-            return _context.PedidoModel.Any(e => e.Id == id);
+            return _context.OrderModel.Any(e => e.Id == id);
         }
     }
 }

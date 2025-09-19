@@ -30,7 +30,7 @@ namespace practicamvc.Models
 
         // Propiedades de navegación (nullable)
         public Pedidos? Pedido { get; set; }
-        public Productos? Producto { get; set; }
+        public Order? Producto { get; set; }
 
         [Display(Name = "Subtotal")]
         [NotMapped] // Indica que no se mapea a la base de datos

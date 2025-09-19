@@ -4,7 +4,7 @@ using practicamvc.Models;
 
 namespace practicamvc.Models
 {
-    public class Productos
+    public class Order
     {
         [Key]
         public int Id { get; set; }
