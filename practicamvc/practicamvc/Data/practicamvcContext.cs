@@ -1,57 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using practicamvc.Models;
 
-
-namespace mvcProyect.Data
+namespace practicamvc.Data
 {
-    public class ArtesaniasDBContext : DbContext
+    public class practicamvcContext : DbContext
     {
-        public ArtesaniasDBContext(DbContextOptions<ArtesaniasDBContext> options)
+        public practicamvcContext (DbContextOptions<practicamvcContext> options)
             : base(options)
-        { }
-
-        public DbSet<ProductoModel> Productos { get; set; }
-        public DbSet<ClienteModel> Clientes { get; set; }
-        public DbSet<PedidoModel> Pedidos { get; set; }
-        public DbSet<DetallePedidoModel> DetallePedidos { get; set; }
-        
-        public DbSet<ErrorViewModel> ErrorViewModels { get; set; } // opcional
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Relación Pedido ↔ Cliente (Many-to-One)
-            modelBuilder.Entity<PedidoModel>()
-                .HasOne(p => p.Cliente) // Un Pedido tiene un Cliente
-                .WithMany(c => c.Pedidos) // Un Cliente tiene muchos Pedidos
-                .HasForeignKey(p => p.ClienteId) // Clave foránea en PedidoModel
-                .OnDelete(DeleteBehavior.Cascade);
-
-            // Relación Pedido ↔ DetallePedido (One-to-Many)
-            modelBuilder.Entity<PedidoModel>()
-                .HasMany(p => p.DetallePedidos) // Un Pedido tiene muchos DetallePedidos
-                .WithOne(d => d.Pedido) // Un DetallePedido pertenece a un Pedido
-                .HasForeignKey(d => d.PedidoId) // Clave foránea en DetallePedidoModel
-                .OnDelete(DeleteBehavior.Cascade);
-
-            // Relación DetallePedido ↔ Producto (Many-to-One)
-            modelBuilder.Entity<DetallePedidoModel>()
-                .HasOne(d => d.Producto) // Un DetallePedido tiene un Producto
-                .WithMany(p => p.DetallePedidos) // Un Producto tiene muchos DetallePedidos
-                .HasForeignKey(d => d.ProductoId) // Clave foránea en DetallePedidoModel
-                .OnDelete(DeleteBehavior.Restrict); // Para no borrar productos si hay detalle
-
-            // Configuraciones opcionales adicionales
-            modelBuilder.Entity<ProductoModel>()
-                .Property(p => p.Precio)
-                .HasColumnType("decimal(18,2)");
-
-            modelBuilder.Entity<DetallePedidoModel>()
-                .Property(d => d.PrecioUnitario)
-                .HasColumnType("decimal(18,2)");
-
-            modelBuilder.Entity<PedidoModel>()
-                .Property(p => p.MontoDecimal)
-                .HasColumnType("decimal(18,2)");
         }
+
+        public DbSet<practicamvc.Models.ClientesModel> ClienteModel { get; set; } = default!;
+        public DbSet<practicamvc.Models.DetallePedidoModel> DetallePedidoModel { get; set; } = default!;
+        public DbSet<practicamvc.Models.ErrorViewModel> ErrorViewModel { get; set; } = default!;
+        public DbSet<practicamvc.Models.PedidoModel> PedidoModel { get; set; } = default!;
+        public DbSet<practicamvc.Models.ProductoModel> ProductoModel { get; set; } = default!;
     }
 }

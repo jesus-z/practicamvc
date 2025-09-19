@@ -12,7 +12,7 @@ using practicamvc.Data;
 namespace practicamvc.Migrations
 {
     [DbContext(typeof(practicamvcContext))]
-    [Migration("20250917004529_datitos")]
+    [Migration("20250918233709_datitos")]
     partial class datitos
     {
         /// <inheritdoc />

@@ -10,11 +10,11 @@ using practicamvc.Models;
 
 namespace practicamvc.Controllers
 {
-    public class DetallePedidoController : Controller
+    public class DetallePedidoModelsController : Controller
     {
         private readonly practicamvcContext _context;
 
-        public DetallePedidoController(practicamvcContext context)
+        public DetallePedidoModelsController(practicamvcContext context)
         {
             _context = context;
         }

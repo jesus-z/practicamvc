@@ -10,23 +10,22 @@ using practicamvc.Models;
 
 namespace practicamvc.Controllers
 {
-    public class PedidoController : Controller
+    public class ErrorViewModelsController : Controller
     {
         private readonly practicamvcContext _context;
 
-        public PedidoController(practicamvcContext context)
+        public ErrorViewModelsController(practicamvcContext context)
         {
             _context = context;
         }
 
-        // GET: PedidoModels
+        // GET: ErrorViewModels
         public async Task<IActionResult> Index()
         {
-            var practicamvcContext = _context.PedidoModel.Include(p => p.Cliente);
-            return View(await practicamvcContext.ToListAsync());
+            return View(await _context.ErrorViewModel.ToListAsync());
         }
 
-        // GET: PedidoModels/Details/5
+        // GET: ErrorViewModels/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,42 +33,39 @@ namespace practicamvc.Controllers
                 return NotFound();
             }
 
-            var pedidoModel = await _context.PedidoModel
-                .Include(p => p.Cliente)
+            var errorViewModel = await _context.ErrorViewModel
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (pedidoModel == null)
+            if (errorViewModel == null)
             {
                 return NotFound();
             }
 
-            return View(pedidoModel);
+            return View(errorViewModel);
         }
 
-        // GET: PedidoModels/Create
+        // GET: ErrorViewModels/Create
         public IActionResult Create()
         {
-            ViewData["ClienteId"] = new SelectList(_context.ClienteModel, "Id", "NombreCompleto");
             return View();
         }
 
-        // POST: PedidoModels/Create
+        // POST: ErrorViewModels/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FechaPedido,ClienteId,Estado,MontoDecimal")] PedidoModel pedidoModel)
+        public async Task<IActionResult> Create([Bind("Id,RequestId,Mensaje,Ruta,Codigo")] ErrorViewModel errorViewModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(pedidoModel);
+                _context.Add(errorViewModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClienteId"] = new SelectList(_context.ClienteModel, "Id", "NombreCompleto", pedidoModel.ClienteId);
-            return View(pedidoModel);
+            return View(errorViewModel);
         }
 
-        // GET: PedidoModels/Edit/5
+        // GET: ErrorViewModels/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,23 +73,22 @@ namespace practicamvc.Controllers
                 return NotFound();
             }
 
-            var pedidoModel = await _context.PedidoModel.FindAsync(id);
-            if (pedidoModel == null)
+            var errorViewModel = await _context.ErrorViewModel.FindAsync(id);
+            if (errorViewModel == null)
             {
                 return NotFound();
             }
-            ViewData["ClienteId"] = new SelectList(_context.ClienteModel, "Id", "NombreCompleto", pedidoModel.ClienteId);
-            return View(pedidoModel);
+            return View(errorViewModel);
         }
 
-        // POST: PedidoModels/Edit/5
+        // POST: ErrorViewModels/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FechaPedido,ClienteId,Estado,MontoDecimal")] PedidoModel pedidoModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,RequestId,Mensaje,Ruta,Codigo")] ErrorViewModel errorViewModel)
         {
-            if (id != pedidoModel.Id)
+            if (id != errorViewModel.Id)
             {
                 return NotFound();
             }
@@ -102,12 +97,12 @@ namespace practicamvc.Controllers
             {
                 try
                 {
-                    _context.Update(pedidoModel);
+                    _context.Update(errorViewModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PedidoModelExists(pedidoModel.Id))
+                    if (!ErrorViewModelExists(errorViewModel.Id))
                     {
                         return NotFound();
                     }
@@ -118,11 +113,10 @@ namespace practicamvc.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClienteId"] = new SelectList(_context.ClienteModel, "Id", "NombreCompleto", pedidoModel.ClienteId);
-            return View(pedidoModel);
+            return View(errorViewModel);
         }
 
-        // GET: PedidoModels/Delete/5
+        // GET: ErrorViewModels/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -130,35 +124,34 @@ namespace practicamvc.Controllers
                 return NotFound();
             }
 
-            var pedidoModel = await _context.PedidoModel
-                .Include(p => p.Cliente)
+            var errorViewModel = await _context.ErrorViewModel
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (pedidoModel == null)
+            if (errorViewModel == null)
             {
                 return NotFound();
             }
 
-            return View(pedidoModel);
+            return View(errorViewModel);
         }
 
-        // POST: PedidoModels/Delete/5
+        // POST: ErrorViewModels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var pedidoModel = await _context.PedidoModel.FindAsync(id);
-            if (pedidoModel != null)
+            var errorViewModel = await _context.ErrorViewModel.FindAsync(id);
+            if (errorViewModel != null)
             {
-                _context.PedidoModel.Remove(pedidoModel);
+                _context.ErrorViewModel.Remove(errorViewModel);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PedidoModelExists(int id)
+        private bool ErrorViewModelExists(int id)
         {
-            return _context.PedidoModel.Any(e => e.Id == id);
+            return _context.ErrorViewModel.Any(e => e.Id == id);
         }
     }
 }
