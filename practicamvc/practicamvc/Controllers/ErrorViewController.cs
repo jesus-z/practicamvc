@@ -10,22 +10,22 @@ using practicamvc.Models;
 
 namespace practicamvc.Controllers
 {
-    public class ClientesController : Controller
+    public class ErrorViewController : Controller
     {
         private readonly practicamvcContext _context;
 
-        public ClientesController(practicamvcContext context)
+        public ErrorViewController(practicamvcContext context)
         {
             _context = context;
         }
 
-        // GET: ClienteModels
+        // GET: ErrorViewModels
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ClientesModel.ToListAsync());
+            return View(await _context.ErrorViewModel.ToListAsync());
         }
 
-        // GET: ClienteModels/Details/5
+        // GET: ErrorViewModels/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace practicamvc.Controllers
                 return NotFound();
             }
 
-            var clienteModel = await _context.ClientesModel
+            var errorViewModel = await _context.ErrorViewModel
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (clienteModel == null)
+            if (errorViewModel == null)
             {
                 return NotFound();
             }
 
-            return View(clienteModel);
+            return View(errorViewModel);
         }
 
-        // GET: ClienteModels/Create
+        // GET: ErrorViewModels/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: ClienteModels/Create
+        // POST: ErrorViewModels/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,NombreCompleto,Telefono,FechaRegistro,Ciudad,Activo")] Clientes clienteModel)
+        public async Task<IActionResult> Create([Bind("Id,RequestId,Mensaje,Ruta,Codigo")] ErrorView errorViewModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(clienteModel);
+                _context.Add(errorViewModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(clienteModel);
+            return View(errorViewModel);
         }
 
-        // GET: ClienteModels/Edit/5
+        // GET: ErrorViewModels/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace practicamvc.Controllers
                 return NotFound();
             }
 
-            var clienteModel = await _context.ClientesModel.FindAsync(id);
-            if (clienteModel == null)
+            var errorViewModel = await _context.ErrorViewModel.FindAsync(id);
+            if (errorViewModel == null)
             {
                 return NotFound();
             }
-            return View(clienteModel);
+            return View(errorViewModel);
         }
 
-        // POST: ClienteModels/Edit/5
+        // POST: ErrorViewModels/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,NombreCompleto,Telefono,FechaRegistro,Ciudad,Activo")] Clientes clienteModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,RequestId,Mensaje,Ruta,Codigo")] ErrorView errorViewModel)
         {
-            if (id != clienteModel.Id)
+            if (id != errorViewModel.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace practicamvc.Controllers
             {
                 try
                 {
-                    _context.Update(clienteModel);
+                    _context.Update(errorViewModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ClienteModelExists(clienteModel.Id))
+                    if (!ErrorViewModelExists(errorViewModel.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace practicamvc.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(clienteModel);
+            return View(errorViewModel);
         }
 
-        // GET: ClienteModels/Delete/5
+        // GET: ErrorViewModels/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,34 +124,34 @@ namespace practicamvc.Controllers
                 return NotFound();
             }
 
-            var clienteModel = await _context.ClientesModel
+            var errorViewModel = await _context.ErrorViewModel
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (clienteModel == null)
+            if (errorViewModel == null)
             {
                 return NotFound();
             }
 
-            return View(clienteModel);
+            return View(errorViewModel);
         }
 
-        // POST: ClienteModels/Delete/5
+        // POST: ErrorViewModels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var clienteModel = await _context.ClientesModel.FindAsync(id);
-            if (clienteModel != null)
+            var errorViewModel = await _context.ErrorViewModel.FindAsync(id);
+            if (errorViewModel != null)
             {
-                _context.ClientesModel.Remove(clienteModel);
+                _context.ErrorViewModel.Remove(errorViewModel);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ClienteModelExists(int id)
+        private bool ErrorViewModelExists(int id)
         {
-            return _context.ClientesModel.Any(e => e.Id == id);
+            return _context.ErrorViewModel.Any(e => e.Id == id);
         }
     }
 }

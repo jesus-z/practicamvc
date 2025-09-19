@@ -14,10 +14,10 @@ namespace practicamvc.Data
         {
         }
 
-        public DbSet<practicamvc.Models.ClientesModel> ClienteModel { get; set; } = default!;
-        public DbSet<practicamvc.Models.DetallePedidoModel> DetallePedidoModel { get; set; } = default!;
-        public DbSet<practicamvc.Models.ErrorViewModel> ErrorViewModel { get; set; } = default!;
-        public DbSet<practicamvc.Models.PedidoModel> PedidoModel { get; set; } = default!;
-        public DbSet<practicamvc.Models.ProductoModel> ProductoModel { get; set; } = default!;
+        public DbSet<practicamvc.Models.Clientes> ClientesModel { get; set; } = default!;
+        public DbSet<practicamvc.Models.DetallePedidos> DetallePedidoModel { get; set; } = default!;
+        public DbSet<practicamvc.Models.ErrorView> ErrorViewModel { get; set; } = default!;
+        public DbSet<practicamvc.Models.Pedidos> PedidoModel { get; set; } = default!;
+        public DbSet<practicamvc.Models.Productos> ProductoModel { get; set; } = default!;
     }
 }

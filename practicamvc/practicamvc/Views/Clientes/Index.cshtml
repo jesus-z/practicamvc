@@ -1,4 +1,4 @@
-﻿@model IEnumerable<practicamvc.Models.ErrorView>
+﻿@model IEnumerable<practicamvc.Models.Clientes>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,16 +13,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.RequestId)
+                @Html.DisplayNameFor(model => model.NombreCompleto)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Mensaje)
+                @Html.DisplayNameFor(model => model.Telefono)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Ruta)
+                @Html.DisplayNameFor(model => model.FechaRegistro)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Codigo)
+                @Html.DisplayNameFor(model => model.Ciudad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Activo)
             </th>
             <th></th>
         </tr>
@@ -31,16 +34,19 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.RequestId)
+                @Html.DisplayFor(modelItem => item.NombreCompleto)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Mensaje)
+                @Html.DisplayFor(modelItem => item.Telefono)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Ruta)
+                @Html.DisplayFor(modelItem => item.FechaRegistro)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Codigo)
+                @Html.DisplayFor(modelItem => item.Ciudad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Activo)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
